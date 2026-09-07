@@ -1,0 +1,219 @@
+{
+ "mtf": [
+  {
+   "tier": 1,
+   "services": "Task lighting and phone charging",
+   "kwh_hh_yr": "> 4.3",
+   "source": "Table 7, p. 36"
+  },
+  {
+   "tier": 2,
+   "services": "General lighting and phone charging, plus television and fan (if needed)",
+   "kwh_hh_yr": "> 73",
+   "source": "Table 7, p. 36"
+  },
+  {
+   "tier": 3,
+   "services": "Tier 2 and any medium-power appliances",
+   "kwh_hh_yr": "> 365",
+   "source": "Table 7, p. 36"
+  },
+  {
+   "tier": 4,
+   "services": "Tier 3 and any high-power appliances",
+   "kwh_hh_yr": "> 1 241",
+   "source": "Table 7, p. 36"
+  },
+  {
+   "tier": 5,
+   "services": "Tier 2 and any very-high-power appliances",
+   "kwh_hh_yr": "> 2 993",
+   "source": "Table 7, p. 36 (printed as 'Tier 2' in the report; kept verbatim)"
+  }
+ ],
+ "mg_costs": [
+  {
+   "component": "Diesel generator",
+   "optimistic": "897 USD/kVA",
+   "pessimistic": "897 USD/kVA"
+  },
+  {
+   "component": "PV panels (including racking)",
+   "optimistic": "338 USD/kWp",
+   "pessimistic": "607 USD/kWp"
+  },
+  {
+   "component": "Charge controller",
+   "optimistic": "142 USD/kW",
+   "pessimistic": "142 USD/kW"
+  },
+  {
+   "component": "Li-ion (LFP) battery",
+   "optimistic": "142 USD/kWh",
+   "pessimistic": "271 USD/kWh"
+  },
+  {
+   "component": "Inverter",
+   "optimistic": "101 USD/kW",
+   "pessimistic": "112 USD/kW"
+  },
+  {
+   "component": "Expected cycle life of a battery",
+   "optimistic": "3780 cycles",
+   "pessimistic": "2500 cycles"
+  }
+ ],
+ "mg_potential": {
+  "connections": {
+   "BFA": {
+    "hydro": 101325,
+    "wind": 0,
+    "pv": 15279398
+   },
+   "MLI": {
+    "hydro": 96661,
+    "wind": 17,
+    "pv": 4587451
+   },
+   "NGA": {
+    "hydro": 1250813,
+    "wind": 3034,
+    "pv": 76511948
+   },
+   "SEN": {
+    "hydro": 72071,
+    "wind": 0,
+    "pv": 2524168
+   }
+  },
+  "settlements": {
+   "BFA": {
+    "hydro": 649,
+    "wind": 0,
+    "pv": 92398
+   },
+   "MLI": {
+    "hydro": 334,
+    "wind": 1,
+    "pv": 27329
+   },
+   "NGA": {
+    "hydro": 4509,
+    "wind": 91,
+    "pv": 259972
+   },
+   "SEN": {
+    "hydro": 206,
+    "wind": 0,
+    "pv": 11781
+   }
+  }
+ },
+ "access": {
+  "BFA": {
+   "rate_2023": "21.7%",
+   "target_2030": "65%",
+   "urban": "62.6% (2023)",
+   "rural": "2% (2023)"
+  },
+  "NGA": {
+   "rate_2023": "61.2%",
+   "target_2030": "100%",
+   "urban": "85% (2023)",
+   "rural": "32.9% (2023)"
+  },
+  "MLI": {
+   "rate_2023": "54.5%",
+   "target_2030": "87%",
+   "urban": "91.5% (2023)",
+   "rural": "22.7% (2023)"
+  },
+  "SEN": {
+   "rate_2023": "74.2%",
+   "target_2030": "100%",
+   "urban": "96.1% (2023)",
+   "rural": "56.5% (2023)"
+  }
+ },
+ "access_urban_rural_source": "Table A6, p. 72 (2025 Tracking SDG7 Report), 2023 values",
+ "national": {
+  "BFA": [
+   [
+    "On-grid renewables, 2030 (National Renewable Energy Action Plan)",
+    "318 MW, 36% of electricity mix",
+    "Table 3, p. 23"
+   ],
+   [
+    "Rural population on renewable off-grid systems, 2030",
+    "26.9%",
+    "Table 3, p. 23"
+   ]
+  ],
+  "MLI": [
+   [
+    "Electricity access, 2020 (IEA et al., 2022)",
+    "51%",
+    "Table 4, p. 26"
+   ],
+   [
+    "Rural access, 2020 → 2030 target",
+    "16% → 81%",
+    "Table 4, p. 26"
+   ],
+   [
+    "Solar installed capacity, 2017 → 2030 plan (ECREEE, 2015)",
+    "3 MW → 528 MW",
+    "Table 5, p. 26"
+   ]
+  ],
+  "NGA": [
+   [
+    "Electricity access, 2023 → 2030 target",
+    "61.2% → 100%",
+    "Table 1, p. 21"
+   ],
+   [
+    "Decentralised renewable energy by 2030",
+    "> 6 GW",
+    "Section 1.2, p. 27 (Federal Republic of Nigeria, 2023)"
+   ],
+   [
+    "On-grid capacity target",
+    "> 40 GW, 40% renewable",
+    "Section 1.2, p. 27 (Federal Republic of Nigeria, 2023)"
+   ]
+  ],
+  "SEN": [
+   [
+    "Access target",
+    "Universal access by 2029 (Vision Senegal 2050)",
+    "Section 1.2, p. 29"
+   ],
+   [
+    "Planned mini-grid connections (Vision Senegal 2050)",
+    "1.6 million connections",
+    "Section 1.2, p. 29; Table 6"
+   ],
+   [
+    "Planned stand-alone solar-kit connections",
+    "1.2 million people",
+    "Section 1.2, p. 29; Table 6"
+   ]
+  ]
+ },
+ "pump_prices_usd_l": {
+  "source": "Table A9, p. 74, from the World Bank World Development Indicators, pump price for diesel fuel (EP.PMP.DESL.CD)",
+  "BFA": 0.86,
+  "MLI": 0.98,
+  "NGA": 0.64,
+  "SEN": 0.97
+ },
+ "reference_case": {
+  "source": "Appendix V, p. 82",
+  "tier": 3,
+  "kwh_hh_yr": 803,
+  "grid": "limited grid expansion",
+  "mgcost": "optimistic mini-grid PV cost trajectory",
+  "note": "It is a separate run over the mini-grid PV settlements beyond the grid, so its baseline differs from the Explorer's Tier 3 cells: Senegal has 727 MWh here against 352 MWh in Table 12."
+ }
+}

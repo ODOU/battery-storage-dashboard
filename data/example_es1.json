@@ -1,0 +1,14 @@
+{
+ "Investment": {
+  "With Batteries": 75762.4672968547,
+  "Without Batteries": 23183.8014477109
+ },
+ "O&M": {
+  "With Batteries": 5658.345561393,
+  "Without Batteries": 9625.96115360323
+ },
+ "Fuel": {
+  "With Batteries": 17510.9601428334,
+  "Without Batteries": 86842.2711558483
+ }
+}

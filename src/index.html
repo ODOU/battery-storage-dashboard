@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
+<title>Battery storage for mini-grids in West Africa: dashboard</title>
+<style>{{STYLE}}</style>
+<script>window.addEventListener("error", function (e) { var b = document.getElementById("err"); if (b) { b.style.display = "block"; b.textContent = "This dashboard could not render completely (" + (e.message || "script error") + "). Please open it in a current browser or report the problem."; } });</script>
+</head>
+<body>
+<div id="err" role="alert"></div>
+<noscript><div style="background:#fde8e8;color:#8a1c1c;padding:10px 20px">This dashboard needs JavaScript to draw its charts. Enable JavaScript or open the report at irena.org.</div></noscript>
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">IRENA · Strategic Energy Access Planning Support (SEAPS) · Report companion</p>
+    <h1>Unlocking battery storage potential for sustainable mini-grid electrification in West Africa</h1>
+    <p class="sub">Burkina Faso · Mali · Nigeria · Senegal: what universal electricity access by 2030 takes, across twenty scenarios per country</p>
+    <div id="headline" class="headline"></div>
+  </div>
+</header>
+<nav id="tabs" class="wrap tabs" role="tablist">
+  <button data-tab="findings" class="active">Key findings</button>
+  <button data-tab="explorer">Explorer</button>
+  <button data-tab="countries">Countries</button>
+  <button data-tab="method">Method &amp; data</button>
+</nav>
+<main class="wrap">
+  <section id="tab-findings" class="tab active" aria-label="Key findings">
+    <p class="glyph-key" id="glyph-key"></p>
+    <div id="cards" class="cards"></div>
+    <h2>Policy recommendations</h2>
+    <ol id="recs" class="recs"></ol>
+  </section>
+  <section id="tab-explorer" class="tab" aria-label="Explorer">
+    <div id="controls" class="controls"></div>
+    <div id="scenario-line" class="scenario-line"></div>
+    <div class="row row-map">
+      <div class="map-col"><h3 id="map-title"></h3><div id="map"></div><div id="map-legend" class="legend"></div><p class="disclaimer">This map is provided for illustration purposes only. Boundaries and names shown on this map do not imply any endorsement or acceptance by IRENA.</p></div>
+      <div class="kpi-col"><div id="kpis" class="kpis"></div><p id="kpi-note" class="note"></p><div id="mix" class="panel"></div></div>
+    </div>
+    <div class="row row-3"><div id="trend-battery" class="panel"></div><div id="trend-vos" class="panel"></div><div id="trend-cap" class="panel"></div></div>
+    <div id="heat" class="panel"></div>
+    <div id="sensitivity" class="panel"></div>
+  </section>
+  <section id="tab-countries" class="tab" aria-label="Countries">
+    <nav id="country-tabs" class="subtabs" aria-label="Country"></nav>
+    <div id="country-body"></div>
+  </section>
+  <section id="tab-method" class="tab" aria-label="Method and data">
+    <div id="method-body"></div>
+    <section id="references"><h2>References</h2>
+    <p>IRENA (2026), <i>Unlocking battery storage potential for sustainable mini-grid electrification in West Africa</i>, International Renewable Energy Agency, Abu Dhabi. ISBN 978-92-9260-761-6. <a href="https://www.irena.org/Publications/2026/Aug/Unlocking-battery-storage-potential-for-sustainable-mini-grid-electrification-in-West-Africa">www.irena.org/Publications/2026/Aug/Unlocking-battery-storage-potential-for-sustainable-mini-grid-electrification-in-West-Africa</a>. Produced under the Strategic Energy Access Planning Support (SEAPS) programme.</p>
+    <p>Sources cited in the Method tab, as referenced in the report: Agenbroad, J., et al. (2018), <i>Six ways to reduce minigrid costs by 60% for rural electrification</i>, Rocky Mountain Institute; ESMAP (2019), <i>Mini grids for half a billion people: Market outlook and handbook for decision makers</i>, Energy Sector Management Assistance Program, World Bank; IEA, IRENA, UNSD, World Bank, WHO (2024 and 2025), <i>Tracking SDG 7: The energy progress report</i>; IRENA (2025), <i>Off-grid renewable energy statistics 2025</i>; IRENA (2025), <i>Renewable power generation costs in 2024</i>; Szabó, S., et al. (2011), "Energy solutions in rural Africa: Mapping electrification costs of distributed solar and diesel generation versus grid extension", <i>Environmental Research Letters</i> 6(3); GRID3 settlement extents; WorldPop 2020 constrained population estimates; UNDESA <i>World Population Prospects</i>; OpenStreetMap and energydata.info grid lines; World Bank Global Electrification Platform (grid connection cap and network costs); World Bank World Development Indicators (diesel pump prices).</p>
+    <p>Every figure comes from the published edition: Table 1 (p. 21), Tables 7–9, the annex Tables 10–14, Appendix V Table A11 and the report's chart data. Where the report rounds a headline, this dashboard shows the table value. The summary's "nearly USD 25 billion" and "about 130 GWh" are USD 24.4 bn in Table 14 and 127.2 GWh in Table 12; the report's "171 million people" sum to 172.2 million in Table 11. Appendix V is a separate run over the mini-grid PV settlements beyond the grid, which is why its baseline differs from the Explorer's Tier 3 scenario.</p>
+    <p>Map boundaries: Natural Earth (public domain), simplified. The designations employed and the presentation of material on the map do not imply the expression of any opinion on the part of IRENA concerning the legal status of any region, country, territory, city or area or of its authorities, or concerning the delimitation of frontiers or boundaries.</p>
+    <p>The report's lead author prepared this dashboard as a companion for exploring the published results. It is not an official IRENA publication. For any figure shown here, the report is the authoritative source.</p></section>
+  </section>
+</main>
+<footer class="wrap foot">
+  <p>Data as of {{BUILT}} · Source: IRENA (2026), <i>Unlocking battery storage potential for sustainable mini-grid electrification in West Africa</i>, International Renewable Energy Agency, Abu Dhabi, ISBN 978-92-9260-761-6, published 31 August 2026 · © IRENA 2026 · Companion dashboard by the report's lead author; not an official IRENA publication.</p>
+</footer>
+<script>window.DATA = {{DATA_JSON}};</script>
+<script>{{SCRIPTS}}</script>
+</body>
+</html>

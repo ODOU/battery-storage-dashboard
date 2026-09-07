@@ -1,0 +1,42 @@
+{
+ "headline": [
+  {"value": "171 M", "label": "people to connect for universal access by 2030", "scenario": {"all": true}, "scenario_text": "every scenario"},
+  {"value": "568 MW", "label": "near-term mini-grid market", "scenario": {"tiers": [2], "grid": "leastcost", "mgcost": "optimistic"}, "scenario_text": "Tier 2 · least-cost grid · optimistic mini-grid costs"},
+  {"value": "USD 24.4 bn", "label": "value of storage in the highest-value scenario", "scenario": {"tiers": [5], "grid": "restricted", "mgcost": "optimistic"}, "scenario_text": "Tier 5 · restricted grid · optimistic mini-grid costs"}
+ ],
+ "cards": [
+  {"id": "pv", "title": "Solar PV mini-grids dominate", "number": "> 98%",
+   "text": "Almost every settlement a mini-grid could serve is a solar PV site. Table 9 counts the maximum potential across all scenarios for settlements above 10 kW: hydropower suits a few high-demand sites, under 2% of the total, and wind is negligible at under 0.1%.",
+   "chart": "mg_potential", "scenario": {"all": true}, "scenario_text": "maximum across all scenarios",
+   "figure": "People reachable by mini-grid technology, four countries", "source": "Table 9"},
+  {"id": "market", "title": "A market larger than Africa's installed base", "number": "568 MW",
+   "text": "Tier 2 demand under least-cost grid expansion with optimistic mini-grid costs calls for 568 MW of mini-grids: Nigeria 399 MW, Burkina Faso 92 MW, Mali 56 MW, Senegal 20 MW, all rounded. That is more than the 149 MW of solar PV mini-grids installed across the whole of Africa by 2024. The report reads it as a minimum addressable market of about 42 700 settlements and 21 million people, with about 2.25 GWh of battery storage behind it.",
+   "chart": "market_bar", "scenario": {"tiers": [2], "grid": "leastcost", "mgcost": "optimistic"}, "scenario_text": "Tier 2 · least-cost grid · optimistic mini-grid costs",
+   "figure": "Mini-grid capacity required at Tier 2, by country (MW)", "source": "Table 13; IRENA (2025c) for the Africa reference line"},
+  {"id": "constrained", "title": "Mini-grids take over when the grid is constrained", "number": "47–110 M",
+   "text": "Cap grid connections at 2.5% of the population a year and mini-grids serve 47–110 million people. They supply more than half of all new connections from Tier 3 upwards, and 43% at Tier 2 with optimistic mini-grid costs. Even where the grid expands at least cost, with optimistic mini-grid costs they remain the second-largest source of access from Tier 3 upwards.",
+   "chart": "constrained_stack", "scenario": {"grid": "restricted", "mgcost": "optimistic"}, "scenario_text": "restricted grid · optimistic mini-grid costs · Tiers 1–5",
+   "figure": "New connections by technology and demand tier, four countries (people)", "source": "Table 11 and the report's chart data"},
+  {"id": "progression", "title": "Access builds up in steps", "number": "≈ 122 M",
+   "text": "Stand-alone solar serves about 122 million people at Tier 1 and 41–67 million at Tier 2, depending on the scenario family; the report sums this up as 70–122 million people below Tier 3. As demand rises, those households move to mini-grids or to the grid. Under a constrained grid, mini-grids lead from Tier 3 upwards.",
+   "chart": "progression_area", "scenario": {"grid": "leastcost", "mgcost": "optimistic"}, "scenario_text": "least-cost grid · optimistic mini-grid costs · Tiers 1–5",
+   "figure": "New connections by technology as demand rises, four countries (people)", "source": "Table 11 and the report's chart data"},
+  {"id": "value", "title": "Storage pays for itself", "number": "2 : 1",
+   "text": "Across the scenarios, fuel savings are twice the extra battery and PV investment on average, and three to four times at Tiers 2–3 with optimistic mini-grid costs. Under restricted grid expansion with optimistic mini-grid costs at Tier 5, the value of storage reaches USD 24.4 billion, which the report rounds to nearly USD 25 billion, with 127 GWh of batteries. Least-cost grid expansion needs at most 8.2 GWh; the report puts the contrast at sixteen times.",
+   "chart": "value_bar", "scenario": {"tiers": [5], "grid": "restricted", "mgcost": "optimistic"}, "scenario_text": "headline cell: Tier 5 · restricted grid · optimistic mini-grid costs",
+   "figure": "Value of storage by demand tier, grid outlook and mini-grid cost case, four countries (USD)", "source": "Table 14"},
+  {"id": "hedge", "title": "A hedge against diesel shocks", "number": "USD 1.9–2.9 → 3.7–5.9",
+   "text": "At baseline pump prices, each dollar of battery capacity avoids USD 1.94–2.85 of diesel over the life of the system. If diesel doubles, that range climbs to USD 3.72–5.89, while the levelised cost of hybrid PV-battery mini-grids rises by only 10–15%. The landlocked Sahel countries carry the highest fuel-price risk: without batteries and with doubled diesel prices, 87% of Burkina Faso's rural electrification investment would go to fuel.",
+   "chart": "leverage_line", "scenario": {"tiers": [3], "grid": "restricted", "mgcost": "optimistic"}, "scenario_text": "Appendix V reference case: Tier 3 · limited grid expansion · optimistic PV costs",
+   "figure": "Avoided diesel per dollar of battery, by diesel price increase and country", "source": "Appendix V, Table A11"}
+ ],
+ "recommendations": [
+  "Integrate off-grid solutions into national electrification strategies.",
+  "Strengthen geospatial electrification planning and institutional capacity.",
+  "Create an enabling environment for solar PV mini-grids with battery storage: technical skills and certification, quality and interoperability standards, open metering, safe battery use and end-of-life management, local manufacturing and recycling, regional co-operation on local content.",
+  "Mobilise innovative finance, business model and de-risking mechanisms."
+ ],
+ "recommendations_source": "executive summary, pp. 13–14, and Chapter 7",
+ "africa_mg_pv_mw_2024": 148.65,
+ "africa_mg_pv_source": "Solar PV mini-grid capacity recorded in Africa in 2024, IRENA (2025c) Off-grid renewable energy statistics 2025; report p. 55"
+}
