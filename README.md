@@ -1,4 +1,4 @@
-# West Africa Battery Storage Mini-grids Dashboard
+# IRENA · Battery Storage for Mini-grids in West Africa · Dashboard
 
 Companion to the IRENA report *Unlocking battery storage potential for
 sustainable mini-grid electrification in West Africa* (IRENA, 2026,
