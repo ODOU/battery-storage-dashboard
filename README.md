@@ -13,6 +13,12 @@ Single-file web companion (`dist/index.html`) to the report: key findings
 storyboard + 20-scenario × 4-country explorer. Opens from disk; makes no
 network request.
 
+
+## Live page
+
+Served by GitHub Pages at <https://odou.github.io/battery-storage-dashboard/> (a copy of
+`dist/index.html` kept at the repository root so the address is short; both files are identical).
+
 ## What is inside
 
 - **Key findings**: six headline cards (mini-grid potential,
