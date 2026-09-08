@@ -39,29 +39,29 @@ const C = (() => {
     o.cats.forEach((c, i) => { let acc = 0; o.series.forEach((s, j) => { const v = s.values[i]; if (v === null || v === undefined) return;
       const w = o.stacked ? band * .7 : band * .7 / o.series.length, x = f.m.l + band * i + band * .15 + (o.stacked ? 0 : w * j);
       const y0 = o.stacked ? y(acc + v) : y(v), h = o.stacked ? y(acc) - y(acc + v) : f.m.t + f.ih - y(v);
-      const r = el("rect", { x, y: y0, width: w, height: Math.max(0, h), fill: s.color }); hover(r, `<b>${s.name}</b><br>${c}: ${fmt(v)}`); f.s.appendChild(r); if (o.stacked) acc += v; }); });
+      const r = el("rect", { x, y: y0, width: w, height: Math.max(0, h), fill: s.color, class: "bar", style: `transition-delay:${i * 60}ms` }); hover(r, `<b>${s.name}</b><br>${c}: ${fmt(v)}`); f.s.appendChild(r); if (o.stacked) acc += v; }); });
     if (o.refLine) { const yy = y(o.refLine.value); f.s.appendChild(el("line", { x1: f.m.l, x2: f.W - f.m.r, y1: yy, y2: yy, stroke: "#b00020", "stroke-dasharray": "4 3" })); f.s.appendChild(el("text", { x: f.W - f.m.r, y: yy - 4, "text-anchor": "end", class: "lbl", fill: "#b00020" }, o.refLine.label)); }
     labels(f, o);
     if (o.series.length > 1) legend(o.el, o.series, o.legendCols);
   };
   const hbar = (o) => { const H = 24 * o.cats.length + 20, W = fitW(o), ml = 80, iw = W - ml - 60, fmt = o.fmt || String; const max = nice(Math.max(...o.values));
     const s = svg(W, H, o.label); o.el.innerHTML = ""; o.el.appendChild(s);
-    o.cats.forEach((c, i) => { const y = 8 + i * 24, w = iw * (o.values[i] || 0) / max; s.appendChild(el("text", { x: ml - 6, y: y + 12, "text-anchor": "end", class: "lbl" }, c)); const r = el("rect", { x: ml, y, width: w, height: 16, fill: o.color }); hover(r, `${c}: ${fmt(o.values[i])}`); s.appendChild(r); s.appendChild(el("text", { x: ml + w + 4, y: y + 12, class: "lbl" }, fmt(o.values[i]))); }); };
+    o.cats.forEach((c, i) => { const y = 8 + i * 24, w = iw * (o.values[i] || 0) / max; s.appendChild(el("text", { x: ml - 6, y: y + 12, "text-anchor": "end", class: "lbl" }, c)); const r = el("rect", { x: ml, y, width: w, height: 16, fill: o.color, class: "hb", style: `transition-delay:${i * 90}ms` }); hover(r, `${c}: ${fmt(o.values[i])}`); s.appendChild(r); s.appendChild(el("text", { x: ml + w + 4, y: y + 12, class: "lbl" }, fmt(o.values[i]))); }); };
   const line = (o) => {
     const n = o.x.length, fmt = o.fmt || String; const top = nice(posMax(o.series.flatMap(s => s.values)));
     const f = frame(o, top), band = f.iw / n; yAxis(f, top, fmt); xTicks(f, o.x, band);
     const px = i => f.m.l + band * (i + .5), py = v => f.m.t + f.ih - f.ih * v / top;
     o.series.forEach(s => {
       let run = [];  // one polyline per run of consecutive values: a missing point breaks the line instead of being bridged
-      const flush = () => { if (run.length > 1) f.s.appendChild(el("polyline", { points: run.join(" "), fill: "none", stroke: s.color, "stroke-width": 2 })); run = []; };
+      const flush = () => { if (run.length > 1) f.s.appendChild(el("polyline", { points: run.join(" "), fill: "none", stroke: s.color, "stroke-width": 2, class: "ln" })); run = []; };
       s.values.forEach((v, i) => { if (v === null || v === undefined) flush(); else run.push(`${px(i)},${py(v)}`); }); flush();
-      s.values.forEach((v, i) => { if (v === null || v === undefined) return; const c = el("circle", { cx: px(i), cy: py(v), r: 3.5, fill: s.color }); hover(c, `<b>${s.name}</b><br>${o.x[i]}: ${fmt(v)}`); f.s.appendChild(c); }); });
+      s.values.forEach((v, i) => { if (v === null || v === undefined) return; const c = el("circle", { cx: px(i), cy: py(v), r: 3.5, fill: s.color, class: "dot", style: `transition-delay:${200 + i * 120}ms` }); hover(c, `<b>${s.name}</b><br>${o.x[i]}: ${fmt(v)}`); f.s.appendChild(c); }); });
     labels(f, o); legend(o.el, o.series, o.legendCols); };
   const area = (o) => {
     const n = o.x.length, fmt = o.fmt || String; const tot = o.x.map((_, i) => o.series.reduce((a, s) => a + (s.values[i] || 0), 0)); const top = nice(Math.max(...tot));
     const f = frame(o, top), band = f.iw / n; yAxis(f, top, fmt); xTicks(f, o.x, band);
     const px = i => f.m.l + band * (i + .5), py = v => f.m.t + f.ih - f.ih * v / top; let base = o.x.map(() => 0);
-    o.series.forEach(s => { const upper = base.map((b, i) => b + (s.values[i] || 0)); const d = upper.map((v, i) => `${px(i)},${py(v)}`).join(" ") + " " + base.map((v, i) => `${px(i)},${py(v)}`).reverse().join(" "); f.s.appendChild(el("polygon", { points: d, fill: s.color, opacity: .85 })); base = upper; });
+    o.series.forEach(s => { const upper = base.map((b, i) => b + (s.values[i] || 0)); const d = upper.map((v, i) => `${px(i)},${py(v)}`).join(" ") + " " + base.map((v, i) => `${px(i)},${py(v)}`).reverse().join(" "); f.s.appendChild(el("polygon", { points: d, fill: s.color, opacity: .85, class: "ar" })); base = upper; });
     // Hover bands per category carry the values of every series (the polygons themselves have no single value).
     o.x.forEach((c, i) => { const r = el("rect", { x: f.m.l + band * i, y: f.m.t, width: band, height: f.ih, fill: "transparent" });
       hover(r, `<b>${c}</b><br>` + o.series.map(s => `${s.name}: ${fmt(s.values[i] || 0)}`).join("<br>") + `<br>Total: ${fmt(tot[i])}`); f.s.appendChild(r); });

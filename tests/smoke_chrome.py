@@ -43,7 +43,7 @@ bootstrap = ('<script>if (typeof S !== "undefined" && typeof renderNow === "func
              # then the map/heat-table zero rule for the "people" metric at Tier 1 (both must read "—" for BFA)
              ' S.metric = "minigrid"; S.tier = 1; renderNow();'
              ' document.body.insertAdjacentHTML("beforeend", "<pre id=probe>MAPLABEL=" + document.querySelector("#map text tspan:last-child").textContent'
-             ' + "|TICKS=" + [...document.querySelectorAll("svg text.tick")].map(t => t.textContent).join(";") + "</pre>"); }</script>')
+             ' + "|TICKS=" + [...document.querySelectorAll("svg text.tick")].map(t => t.textContent).join(";") + "|RECS=" + document.querySelectorAll("details.rec .rec-body p").length + "</pre>"); }</script>')
 assert "</body>" in dist_html, "dist/index.html has no </body> to splice the test bootstrap before"
 patched_html = dist_html.replace("</body>", bootstrap + "\n</body>")
 
@@ -76,7 +76,7 @@ elif "—" not in tier1_row: problems.append("Tier 1 heat-table row has no em-da
 if re.search(r">\s*(0\.0 MWh|0\.0 MW|USD 0\.0 m|0 MWh|0 MW|0 k)\s*<", tier1_row): problems.append("Tier 1 heat-table row still shows a literal zero")
 
 # Probe written by the bootstrap after switching to the "people served by mini-grids" metric at Tier 1.
-probe = re.search(r"MAPLABEL=(.*?)\|TICKS=(.*?)</pre>", text, re.S)   # `text` has the scripts stripped, so the bootstrap source itself cannot match
+probe = re.search(r"MAPLABEL=(.*?)\|TICKS=(.*?)\|RECS=(\d+)</pre>", text, re.S)   # `text` has the scripts stripped, so the bootstrap source itself cannot match
 if not probe: problems.append("probe not written (renderNow failed?)")
 else:
     if probe.group(1).strip() != "—": problems.append(f"BFA map label at Tier 1 / people is {probe.group(1)!r}, expected em-dash")
@@ -84,6 +84,7 @@ else:
     # Every axis tick must be a complete label: a number, or a number with a unit, or "USD …" — never a clipped fragment such as "iD 50.0 bn".
     bad = [t for t in ticks if not re.fullmatch(r"(0|USD .+|< .+|[\d.,  ]+( ?[A-Za-z%/]+)?|baseline|\+\d+ ?%|[A-Za-z][A-Za-z /]+|Tier \d|\d)", t)]
     if bad: problems.append(f"malformed axis ticks: {bad[:8]}")
+    if int(probe.group(3)) < 8: problems.append(f"recommendations not rendered as expandable items ({probe.group(3)} body paragraphs)")
 
 print("svg:", text.count("<svg"), "len:", len(text))
 if problems:

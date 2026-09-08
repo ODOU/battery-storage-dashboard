@@ -67,9 +67,7 @@ p{margin:var(--s2) 0}
 .card .num{font-family:var(--font-display);font-size:2rem;font-weight:700;color:var(--blue);line-height:1.05;margin:var(--s1) 0 var(--s2)}
 .card p{font-size:.9rem;margin:0 0 var(--s2);color:#2B2F33}
 .card .chart{margin-top:var(--s2)}
-.recs{padding-left:0;list-style:none;counter-reset:rec;display:grid;grid-template-columns:1fr 1fr;gap:var(--s3) var(--s5)}
-.recs li{counter-increment:rec;display:grid;grid-template-columns:34px 1fr;gap:var(--s3);align-items:start;padding:var(--s3) 0;border-top:1px solid var(--line);font-size:.95rem}
-.recs li::before{content:counter(rec);font-family:var(--font-display);font-weight:700;color:var(--blue);font-size:1.3rem;line-height:1.1}
+.recs{padding-left:0;list-style:none}
 
 /* ---------- explorer ---------- */
 .controls{position:sticky;top:49px;z-index:5;background:rgba(255,255,255,.97);display:flex;flex-wrap:wrap;gap:var(--s4) var(--s5);align-items:flex-end;padding:var(--s3) 0;border-bottom:1px solid var(--line)}
@@ -112,8 +110,53 @@ button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{ou
 .seg button.on:focus-visible,.subtabs button.on:focus-visible{outline-color:var(--navy)}
 #references p{font-size:.86rem;color:#2B2F33}
 
-@media(max-width:900px){.cards,.row-map,.row-3,.kpis,.headline,.recs{grid-template-columns:1fr 1fr}.hero h1{font-size:1.6rem}}
-@media(max-width:600px){.cards,.row-map,.row-3,.row-4,.row-2,.kpis,.facts,.headline,.recs{grid-template-columns:1fr}.controls{position:static}.hero h1{font-size:1.35rem}.tabs{overflow-x:auto}.tabs button{padding:12px 12px;white-space:nowrap}}
+
+/* ---------- motion: subtle reveals. The states exist only while .reveal / .draw are set by script (motion on); print and reduced motion never see them. ---------- */
+.reveal{opacity:0;transform:translateY(10px);transition:opacity .55s ease-out,transform .55s ease-out}
+.reveal.in{opacity:1;transform:none}
+svg.draw .bar{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(0);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+svg.draw.in .bar{transform:scaleY(1)}
+svg.draw .hb{transform-box:fill-box;transform-origin:0 50%;transform:scaleX(0);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+svg.draw.in .hb{transform:scaleX(1)}
+svg.draw .ln{transition:stroke-dashoffset .9s ease-out}
+svg.draw.in .ln{stroke-dashoffset:0!important}
+svg.draw .dot{opacity:0;transition:opacity .3s}
+svg.draw.in .dot{opacity:1}
+svg.draw .ar{opacity:0;transition:opacity .7s ease-out}
+svg.draw.in .ar{opacity:.85}
+.hero .glyph.hero-g rect.on{transition:opacity .35s ease-out,transform .35s ease-out;transform-box:fill-box;transform-origin:center}
+.hero .glyph.hero-g rect.on.dim{opacity:0;transform:scale(.4)}
+.country{transition:fill .45s ease}
+.card.flash{box-shadow:0 0 0 3px var(--accent);transition:box-shadow .3s}
+@media(prefers-reduced-motion:reduce){.reveal,.reveal.in{opacity:1;transform:none;transition:none}svg.draw .bar,svg.draw .hb{transition:none;transform:none}svg.draw .ln{transition:none;stroke-dashoffset:0!important}svg.draw .dot{opacity:1;transition:none}svg.draw .ar{opacity:.85;transition:none}.hero .glyph.hero-g rect.on.dim{opacity:1;transform:none;transition:none}.country{transition:none}}
+@media print{.reveal{opacity:1;transform:none}svg.draw .bar,svg.draw .hb{transform:none}svg.draw .ln{stroke-dashoffset:0!important}svg.draw .dot{opacity:1}svg.draw .ar{opacity:.85}}
+
+/* ---------- policy recommendations: expandable, evidence-linked ---------- */
+.recs{display:block}
+.recs li{display:block;padding:0;border-top:1px solid var(--line)}
+.recs li::before{content:none}
+details.rec summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:34px 1fr 18px;gap:var(--s3);align-items:center;padding:var(--s3) 0;font-size:.98rem}
+details.rec summary::-webkit-details-marker{display:none}
+details.rec summary:hover .rec-h{color:var(--blue)}
+.rec-n{font-family:var(--font-display);font-weight:700;color:var(--blue);font-size:1.3rem;line-height:1.1}
+.rec-h{font-weight:600;color:var(--navy)}
+details.rec summary::after{content:"";width:8px;height:8px;border-right:2px solid var(--grey);border-bottom:2px solid var(--grey);transform:rotate(45deg);transition:transform .25s;margin-right:6px}
+details.rec[open] summary::after{transform:rotate(-135deg)}
+.rec-body{padding:0 0 var(--s4) 46px;max-width:78ch}
+.rec-body.wide{max-width:none}
+.rec-body p{font-size:.92rem;margin:0 0 var(--s2);color:#2B2F33}
+.rec-lead{font-size:.86rem;color:var(--grey);margin:var(--s3) 0 var(--s2)!important}
+.rec-actions{list-style:none;margin:0 0 var(--s3);padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s3)}
+.rec-actions li{margin:0;padding:var(--s3);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:var(--r);background:var(--tint-2);display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto 1fr;gap:var(--s1) var(--s2);align-content:start}
+.rec-actions span:last-child{grid-column:1 / -1}
+.rec-actions .act-k{font-family:var(--font-display);font-weight:700;color:var(--blue);font-size:1.05rem;line-height:1}
+.rec-actions b{font-size:.86rem;color:var(--navy);line-height:1.3}
+.rec-actions span:last-child{font-size:.8rem;color:#2B2F33;line-height:1.4}
+.rec-links{font-size:.86rem}.rec-links a{color:var(--blue);text-decoration:none;border-bottom:1px solid var(--tint)}.rec-links a:hover{border-bottom-color:var(--blue)}
+@media print{details.rec:not([open]) .rec-body{display:block}details.rec summary::after{display:none}}
+
+@media(max-width:900px){.rec-actions{grid-template-columns:repeat(2,1fr)}.cards,.row-map,.row-3,.kpis,.headline,.recs{grid-template-columns:1fr 1fr}.hero h1{font-size:1.6rem}}
+@media(max-width:600px){.rec-actions{grid-template-columns:1fr}.cards,.row-map,.row-3,.row-4,.row-2,.kpis,.facts,.headline,.recs{grid-template-columns:1fr}.controls{position:static}.hero h1{font-size:1.35rem}.tabs{overflow-x:auto}.tabs button{padding:12px 12px;white-space:nowrap}}
 @media print{
   .hero{background:#fff!important;color:var(--ink);border-bottom:3px solid var(--blue);padding:10px 0}.hero .kicker,.hero .sub{color:var(--grey)}.headline div{border-top-color:var(--blue)}.headline b{color:var(--navy)}.headline span{color:var(--grey)}.headline small{color:var(--accent-ink)}
   .hero .glyph{--glyph-off:#dfe6ec}

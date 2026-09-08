@@ -39,8 +39,36 @@ TABS.forEach((b, i) => {
 document.querySelectorAll(".tab").forEach(s => { s.setAttribute("role", "tabpanel"); s.setAttribute("aria-labelledby", "tabbtn-" + s.id.replace("tab-", "")); });
 window.addEventListener("hashchange", () => showTab(location.hash.slice(1)));
 
+/* ---------- motion: subtle reveals (off when the viewer prefers reduced motion) ---------- */
+const MOTION = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* Count a figure such as "USD 24.4 bn" up from zero, keeping its prefix, unit and decimals. */
+function countUp(el, text, ms = 1100) {
+  const m = /^(.*?)(\d[\d\u202F]*(?:\.\d+)?)(.*)$/.exec(text); if (!m || !MOTION) { el.textContent = text; return; }
+  const target = parseFloat(m[2].replace(/\u202F/g, "")), dec = (m[2].split(".")[1] || "").length, t0 = performance.now();
+  let done = false; const finish = () => { if (!done) { done = true; el.textContent = text; } };
+  const step = now => { if (done) return; const k = Math.max(0, Math.min(1, (now - t0) / ms)), e = 1 - Math.pow(1 - k, 3); el.textContent = m[1] + (target * e).toFixed(dec) + m[3]; if (k < 1) requestAnimationFrame(step); else finish(); };
+  requestAnimationFrame(step); setTimeout(finish, ms + 150);   // the timer guarantees the final figure whatever the frame clock does
+}
+/* Elements get the "reveal" state only when motion is on and only just before they scroll into view;
+   without script, or with reduced motion, the page is simply visible. A timer reveals everything anyway. */
+const revealed = new WeakSet();
+function reveal(el) { if (revealed.has(el)) return; revealed.add(el); el.classList.add("in"); el.querySelectorAll("svg.draw").forEach(sv => sv.classList.add("in")); }
+function observeReveals(els) {
+  if (!MOTION || !("IntersectionObserver" in window)) return;
+  els.forEach((el, i) => { el.classList.add("reveal"); el.style.transitionDelay = (i % 3) * 90 + "ms";
+    el.querySelectorAll("svg").forEach(sv => { sv.classList.add("draw");
+      // lines trace from a fully hidden dash offset; set only here, so charts that never animate keep their lines
+      sv.querySelectorAll("polyline.ln").forEach(pl => { const L = Math.ceil(pl.getTotalLength ? pl.getTotalLength() : 1000); pl.style.strokeDasharray = L; pl.style.strokeDashoffset = L; }); }); });
+  const io = new IntersectionObserver(entries => entries.forEach(en => { if (en.isIntersecting) { reveal(en.target); io.unobserve(en.target); } }), { threshold: 0.15 });
+  els.forEach(el => io.observe(el));
+  setTimeout(() => els.forEach(reveal), 1500);
+}
+
 /* ---------- hero ---------- */
-$("#headline").innerHTML = F.headline.map(h => `<div>${glyph(h.scenario)}<b>${h.value}</b><span>${h.label}</span><small>${h.scenario_text}</small></div>`).join("");
+$("#headline").innerHTML = F.headline.map((h, i) => `<div>${glyph(h.scenario, "hero-g")}<b data-value="${h.value}">${h.value}</b><span>${h.label}</span><small>${h.scenario_text}</small></div>`).join("");
+if (MOTION) { document.querySelectorAll("#headline b").forEach((b, i) => { b.textContent = ""; setTimeout(() => countUp(b, b.dataset.value), 150 + i * 120); });
+  // light the glyph cells one by one (timers, so the sequence always completes); the CSS transition does the fade
+  document.querySelectorAll("#headline .glyph").forEach((g, gi) => { const cells = [...g.querySelectorAll("rect.on")]; cells.forEach(r => r.classList.add("dim")); cells.forEach((r, i) => setTimeout(() => r.classList.remove("dim"), 250 + gi * 120 + i * 30)); }); }
 $("#glyph-key").innerHTML = `${glyph({ tiers: [3], grid: "restricted", mgcost: "optimistic" })} Each glyph is the report's twenty-scenario matrix. Columns are Tiers 1 to 5; rows are the four families (least-cost or restricted grid, optimistic or pessimistic mini-grid costs); the lit cells are the scenarios a figure refers to.`;
 
 /* ---------- key findings ---------- */
@@ -58,8 +86,10 @@ const CARD_CHARTS = {
 $("#cards").innerHTML = F.cards.map((c, i) => `<article class="card" aria-labelledby="card-h-${c.id}"><p class="eyebrow">Finding ${i + 1}</p><div class="card-head"><h3 id="card-h-${c.id}">${c.title}</h3>${glyph(c.scenario)}</div><div class="num">${c.number}</div><p>${nb(c.text)}</p><div class="chart"><p class="fig-title">${c.figure}</p><div id="card-${c.id}"></div><p class="src"><b>Source:</b> ${c.source}. <b>Scenario:</b> ${c.scenario_text}.</p></div></article>`).join("");
 function drawCards() { F.cards.forEach(c => { const fn = CARD_CHARTS[c.chart]; if (!fn) { console.error("unknown card chart", c.chart); return; } fn($("#card-" + c.id)); }); }
 drawCards();
-$("#recs").innerHTML = F.recommendations.map(r => `<li>${r}</li>`).join("");
-$("#recs").insertAdjacentHTML("afterend", `<p class="src"><b>Source:</b> headings as printed in the report (${F.recommendations_source}).</p>`);
+observeReveals([...document.querySelectorAll("#cards .card")]);
+$("#recs").innerHTML = F.recommendations.map((r, i) => `<li><details class="rec"><summary><span class="rec-n">${i + 1}</span><span class="rec-h">${r.heading}</span></summary><div class="rec-body${r.actions ? " wide" : ""}"><p>${nb(r.body)}</p>${r.actions ? `<p class="rec-lead">Five actions the report sets out:</p><ol class="rec-actions">${r.actions.map((a, j) => `<li><span class="act-k">${"abcde"[j]}</span><b>${a.label}</b><span>${a.text}</span></li>`).join("")}</ol>` : ""}<p class="rec-links">See ${r.findings.map(f => `<a href="#card-h-${F.cards[f - 1].id}" data-finding="${f}">Finding ${f}</a>`).join(", ")}</p></div></details></li>`).join("");
+$("#recs").insertAdjacentHTML("afterend", `<p class="src">${F.recommendations_source}</p>`);
+$("#recs").addEventListener("click", e => { const a = e.target.closest("a[data-finding]"); if (!a) return; e.preventDefault(); const card = document.getElementById(a.getAttribute("href").slice(1)).closest(".card"); card.scrollIntoView({ behavior: MOTION ? "smooth" : "auto", block: "center" }); card.classList.add("flash"); setTimeout(() => card.classList.remove("flash"), 1600); });
 
 /* ---------- explorer state ---------- */
 const DEFAULTS = { tier: 3, grid: "restricted", mgcost: "optimistic", metric: "vos_usd_m", country: null };

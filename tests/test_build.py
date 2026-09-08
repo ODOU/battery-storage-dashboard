@@ -179,6 +179,20 @@ def test_country_nutshell_ranges_resolve_from_the_data(html, s):
         assert lo <= share.min() and share.max() <= hi, (k, share)
 
 
+def test_recommendations_carry_the_reports_text(html, findings):
+    recs = findings["recommendations"]
+    assert [r["heading"] for r in recs] == [
+        "Integrate off-grid solutions into national electrification strategies.",
+        "Strengthen geospatial electrification planning and institutional capacity.",
+        "Create an enabling environment for solar PV mini-grids with battery storage.",
+        "Mobilise innovative finance, business model and de-risking mechanisms."]
+    assert len(recs[2]["actions"]) == 5 and recs[2]["actions"][0]["text"].startswith("Developing technical skills") and all(a["label"] for a in recs[2]["actions"])
+    for r in recs:
+        assert r["body"] in html and all(1 <= f <= 6 for f in r["findings"])
+    assert "between 47 million and 110 million people" in html and "asset buy-out clauses on grid arrival" in html
+    assert "prefers-reduced-motion" in html            # motion is optional for the viewer
+
+
 def test_countries_and_method_content(html):
     for t in ("least-cost grid expansion", "restricted grid expansion", "Multi-Tier Framework", "142 USD/kWh", "Table 9", "OnSSET", "Particle Swarm",
               "kWh per household per year", "Baseline pump prices", "grid densification", "2023–2030 modelling horizon", "Table A6",
