@@ -162,6 +162,19 @@ details.rec[open] summary::after{transform:rotate(-135deg)}
 .rec-links{font-size:.86rem}.rec-links a{color:var(--blue);text-decoration:none;border-bottom:1px solid var(--tint)}.rec-links a:hover{border-bottom-color:var(--blue)}
 @media print{details.rec:not([open]) .rec-body{display:block}details.rec summary::after{display:none}}
 
+
+/* ---------- wide screens: the recommendations sit beside the findings so the width is used ---------- */
+@media(min-width:1400px){
+  .wrap{max-width:1640px}
+  .findings-layout{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:var(--s6);align-items:start}
+  .recs-aside{position:sticky;top:60px}
+  .recs-aside h2{margin-top:0}
+  .recs-aside .rec-body{padding-left:0;max-width:none}
+  .recs-aside details.rec summary{grid-template-columns:28px 1fr 18px;font-size:.94rem}
+  .recs-aside .rec-actions{grid-template-columns:1fr;gap:var(--s2)}
+  #method-body p,#references p{max-width:90ch}
+}
+
 @media(max-width:900px){.rec-actions{grid-template-columns:repeat(2,1fr)}.cards,.row-map,.row-3,.kpis,.headline,.recs{grid-template-columns:1fr 1fr}.hero h1{font-size:1.6rem}}
 @media(max-width:600px){.rec-actions{grid-template-columns:1fr}.cards,.row-map,.row-3,.row-4,.row-2,.kpis,.facts,.headline,.recs{grid-template-columns:1fr}.controls{position:static}.hero h1{font-size:1.35rem}.tabs{overflow-x:auto}.tabs button{padding:12px 12px;white-space:nowrap}}
 @media print{
@@ -197,10 +210,16 @@ details.rec[open] summary::after{transform:rotate(-135deg)}
 </nav>
 <main class="wrap">
   <section id="tab-findings" class="tab active" aria-label="Key findings">
-    <p class="glyph-key" id="glyph-key"></p>
-    <div id="cards" class="cards"></div>
-    <h2>Policy recommendations</h2>
-    <ol id="recs" class="recs"></ol>
+    <div class="findings-layout">
+      <div class="findings-main">
+        <p class="glyph-key" id="glyph-key"></p>
+        <div id="cards" class="cards"></div>
+      </div>
+      <aside class="recs-aside" aria-labelledby="recs-h">
+        <h2 id="recs-h">Policy recommendations</h2>
+        <ol id="recs" class="recs"></ol>
+      </aside>
+    </div>
   </section>
   <section id="tab-explorer" class="tab" aria-label="Explorer">
     <div id="controls" class="controls"></div>

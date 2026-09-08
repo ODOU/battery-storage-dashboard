@@ -27,10 +27,16 @@
 </nav>
 <main class="wrap">
   <section id="tab-findings" class="tab active" aria-label="Key findings">
-    <p class="glyph-key" id="glyph-key"></p>
-    <div id="cards" class="cards"></div>
-    <h2>Policy recommendations</h2>
-    <ol id="recs" class="recs"></ol>
+    <div class="findings-layout">
+      <div class="findings-main">
+        <p class="glyph-key" id="glyph-key"></p>
+        <div id="cards" class="cards"></div>
+      </div>
+      <aside class="recs-aside" aria-labelledby="recs-h">
+        <h2 id="recs-h">Policy recommendations</h2>
+        <ol id="recs" class="recs"></ol>
+      </aside>
+    </div>
   </section>
   <section id="tab-explorer" class="tab" aria-label="Explorer">
     <div id="controls" class="controls"></div>
