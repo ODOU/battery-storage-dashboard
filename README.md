@@ -5,9 +5,12 @@ sustainable mini-grid electrification in West Africa* (IRENA, 2026,
 ISBN 978-92-9260-761-6), published 31 August 2026:
 <https://www.irena.org/Publications/2026/Aug/Unlocking-battery-storage-potential-for-sustainable-mini-grid-electrification-in-West-Africa>
 
-**Status:** figures aligned with the published edition on 31 August 2026
-(embargo lifted). The branch is still local; push or host only on explicit
-instruction.
+**Status:** figures aligned with the published edition (31 August 2026); reviewed, redesigned
+and published on 8 September 2026. Live at <https://odou.github.io/battery-storage-dashboard/>
+(public snapshot repository `ODOU/battery-storage-dashboard`). Publish only after the local
+build has been reviewed; see `RUNBOOK.md` section 4.7.
+
+Operating manual: `RUNBOOK.md` (rebuild, update the numbers, test, publish, troubleshoot).
 
 Single-file web companion (`dist/index.html`) to the report: key findings
 storyboard + 20-scenario × 4-country explorer. Opens from disk; makes no
@@ -50,8 +53,10 @@ outline) and Our World in Data (every chart framed with a title, context and sou
   figure, each finding card and the Explorer's current selection, so the lever attribution of
   every number is visible at a glance. Scenario specs live in `data/findings.json` (`scenario`,
   `scenario_text`, `figure`, `source`).
-- Restraint: no animation, no external fonts or scripts (the file stays offline), print
-  stylesheet, reduced-motion respected, keyboard and screen-reader paths kept.
+- Motion, kept subtle: hero figures count up, finding cards and their charts draw in as they
+  scroll into view, map fills cross-fade; all of it off under reduced-motion and print. No external
+  fonts or scripts (the file stays offline), keyboard and screen-reader paths kept. The four policy
+  recommendations expand to the report's own text and link to the findings they rest on.
 
 ## Rebuild
 
@@ -75,7 +80,7 @@ edit that file, not `tables.json`.
 Python: OnSSET_SENEGAL conda environment
 (`C:\Users\OOdou\AppData\Local\anaconda3\envs\OnSSET_SENEGAL\python.exe`).
 
-Tests (`pytest`, 45 tests) build into a temporary directory and never rewrite
+Tests (`pytest`, 46 tests) build into a temporary directory and never rewrite
 `dist/`; `test_data_integrity.py` checks the committed CSVs without either
 source file; `test_build.py` resolves every storyboard number and country
 range from the data and pins the wording anchors of the 2026-09-05 review;
@@ -93,12 +98,12 @@ chart-cache cell, zero-deployment rendering, the ten value-of-storage cells
 revised at publication, the report's rounded summary figures). Read it
 before quoting any figure from this dashboard.
 
-## Publication status (31 August 2026)
+## Publication status
 
-Done at publication: embargo footer removed; `apply_published_annex.py` run
-on the published PDF (ten value-of-storage cells and Senegal's 2023 access
-rate updated; see `data/NOTES.md` items 10–11); storyboard text re-read
-against the published executive summary; official reference and ISBN added.
+31 August 2026: embargo footer removed; `apply_published_annex.py` run on the published PDF
+(ten value-of-storage cells and Senegal's 2023 access rate updated; see `data/NOTES.md`
+items 10–11); official reference and ISBN added.
 
-Still pending, on explicit instruction only: where the file is hosted
-(SharePoint/Teams download, GitHub Pages) and whether the branch is pushed.
+5–8 September 2026: full review against the published edition, IRENA-brand redesign, prose
+pass, motion and expandable recommendations; published on GitHub Pages. How to update and
+republish: `RUNBOOK.md`.
